@@ -1,5 +1,5 @@
 
-//pages
+//home page wrapper
 import{Page, expect} from '@playwright/test';
 
 export abstract class home_Page{
@@ -22,6 +22,8 @@ async assertURLContains(fragment:string){
     await expect(this.page).toHaveURL(new RegExp(fragment));
 }
 }
+
+
 //nav bar classes
 
 
