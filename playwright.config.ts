@@ -33,11 +33,14 @@ export default defineConfig({
         viewport: null,
         
         //headless: false, // Run tests in headless mode
+        // screenshot on test fail
         screenshot: "only-on-failure",
+        // video record on test fail
         video: "retain-on-failure",
         /* Collect trace when test fails. See https://playwright.dev/docs/trace-viewer */
         trace: "retain-on-failure",
     },
+    // folder with test fail results
     outputDir: "test-results/",
     /* Configure projects for major browsers */
     projects: [
@@ -46,6 +49,7 @@ export default defineConfig({
             use: {
                 //...devices["Desktop Chrome"],
                 launchOptions: {
+                    
                     headless: false,
                     args: ["--start-maximized"],
                 },
