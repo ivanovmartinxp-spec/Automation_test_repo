@@ -14,7 +14,7 @@ export class check_Availability_Component{
     constructor(page: Page){
         this.page = page;
 
-        this.availabilityForm = page.locator(".card-body p-4").filter({hasText: 'Check Availability & Book Your Stay'});
+        this.availabilityForm = page.locator(".booking-card").filter({hasText: 'Check Availability & Book Your Stay'});
         this.checkInInput = this.availabilityForm.locator('.react-datepicker__input-container').nth(0);
         this.checkOutInput = this.availabilityForm.locator('.react-datepicker__input-container').nth(1);
 
@@ -56,14 +56,14 @@ export class check_Availability_Component{
     }
 
     async positiveCalendarAvCheck(params:{
-        startDate: '7',
-        endDate: '14'
+        startDate: '8',
+        endDate: '9',
     }){
         const{startDate, endDate} = params;
         await this.checkInInput.click();
-        await this.datePicker.getByText(startDate).click();
+        await this.datePicker.getByText(startDate, {exact: true}).click();
         await this.checkOutInput.click();
-        await this.datePicker.getByText(endDate).click();
+        await this.datePicker.getByText(endDate, {exact: true}).click();
     }
 
     async negativeCalendarAvCheck(params:{
@@ -83,8 +83,8 @@ export class check_Availability_Component{
     }){
         const{startDate, endDate} = params;
         await this.datePickerNextMonth.click();
-        await this.datePicker.getByText(startDate).click();
-        await this.datePicker.getByText(endDate).click();
+        await this.datePicker.getByText(startDate, {exact: true}).click();
+        await this.datePicker.getByText(endDate, {exact:true}).click();
     }
 
     async previousMonthCalendar(params:{

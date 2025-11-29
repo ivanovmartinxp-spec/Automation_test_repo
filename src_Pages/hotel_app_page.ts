@@ -12,6 +12,7 @@ export class hotel_app_Page extends home_Page{
     readonly booking: booking_Form_Component;
     readonly contact: contact_Form_Component;
     readonly availability: check_Availability_Component;
+    
 
 
     constructor(page: Page){
@@ -26,5 +27,9 @@ export class hotel_app_Page extends home_Page{
 
     async open(){
         await this.goto();
+    }
+
+    async pause(){
+        await this.page.pause();
     }
 }
