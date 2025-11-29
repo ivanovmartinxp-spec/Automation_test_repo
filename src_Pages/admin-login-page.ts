@@ -17,7 +17,7 @@ import { home_Page } from './home_page';
         this.usernameInput = page.getByRole('textbox', {name: 'Username'});
         this.passwordInput = page.getByRole('textbox', {name : 'Password'});
         this.logInButton = page.getByRole('button', {name : 'Login'});
-        this.logInError = page.getByRole('alert');
+        this.logInError = page.getByRole('alert').first();
     }
 
     async open(){
@@ -48,6 +48,11 @@ import { home_Page } from './home_page';
 
     async assertInvalidLoginMsg(){
         await expect(this.logInError).toBeVisible();
-        await expect(this.logInError).toContainText('Invalid credentials')
+        await expect(this.logInError).toHaveText('Invalid credentials')
+    }
+
+    async assertLogInPageIsVisible(){
+        await expect(this.loginFrom).toBeVisible();
+
     }
  }

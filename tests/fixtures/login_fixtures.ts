@@ -1,11 +1,12 @@
 import {test as base} from '@playwright/test';
 import { AdminLoginPage } from '../../src_Pages/admin-login-page';
-import { AdminPage } from '../../src_Pages/admin-page';
+import { AdminPage, AdminRoomsPage } from '../../src_Pages/admin-page';
 
 
 type AdminPages = {
     adminLoginPage : AdminLoginPage;
     adminPage : AdminPage;
+    adminRoomsPage: AdminRoomsPage
 
 
 }
@@ -21,6 +22,11 @@ export const test = base.extend<AdminPages>({
         const adminPage = new AdminPage(page);
         await use(adminPage);
     },
+
+    adminRoomsPage: async({page},use)=>{
+        const adminRoomsPage = new AdminRoomsPage(page);
+        await use(adminRoomsPage);
+    }
 
 });
 
