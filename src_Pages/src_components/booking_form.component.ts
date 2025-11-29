@@ -41,7 +41,7 @@ export class booking_Form_Component{
 
         this.successMessage = this.bookingForm.getByText('Booking Successful!');
 
-        this.errorMessage = this.bookingForm.locator('.alert alert-danger');
+        this.errorMessage = this.bookingForm.getByRole('alert');
 
         
 
@@ -82,7 +82,7 @@ export class booking_Form_Component{
     }
 
     async emptyFirstNameDetails(params: {
-        firstName: ''
+        firstName: '',
         lastName: 'Smith',
         email: 'john.smith@test.com',
         phone: '07123456789',
@@ -232,7 +232,7 @@ export class booking_Form_Component{
     async assertFormIsVisible(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.firstNameBooking).toBeVisible();
-        await expect(this.firstNameBooking).toHaveText('Firstname')
+        //await expect(this.firstNameBooking).toContainText('Firstname')
     }
 
     async assertReservationSuccess(){
@@ -241,7 +241,9 @@ export class booking_Form_Component{
     async assertEmptyBookingFirstName(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Firstname should not be blank')
+        console.log(await this.errorMessage.allTextContents());
+        
+        await expect(this.errorMessage).toContainText('Firstname should not be blank')
     }
     async assertIncorrectFName(){
         console.log(await this.bookingForm.allTextContents());

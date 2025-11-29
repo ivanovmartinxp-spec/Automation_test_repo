@@ -1,5 +1,3 @@
-
-//home page wrapper
 import{Page, expect} from '@playwright/test';
 
 export abstract class home_Page{
@@ -23,15 +21,3 @@ async assertURLContains(fragment:string){
 }
 }
 
-
-//nav bar classes
-
-
-
-
-//navigation classes
-
-
-
-
-//book classes

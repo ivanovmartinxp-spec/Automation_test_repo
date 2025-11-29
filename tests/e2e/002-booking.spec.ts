@@ -16,12 +16,20 @@ test('User Can Book A Single Room Successfully', async ({hotelApp})=>{
 
 
 test('Error is received when Booking Form Name is incorrect or empty', async ({hotelApp})=>{
+    await hotelApp.rooms.waitForLoaded();
+    //await hotelApp.availability.submitAvailability();
     await hotelApp.rooms.singleRoomBooking('Single');
     await hotelApp.booking.reserveButton();
 
     await hotelApp.booking.waitForVisible();
     await hotelApp.booking.assertFormIsVisible();
-    await hotelApp.booking.emptyFirstNameDetails;
+
+    await hotelApp.booking.emptyFirstNameDetails({
+        firstName: '',
+        lastName: 'Smith',
+        email: 'john.smith@test.com',
+        phone: '07123456789',
+    });
     await hotelApp.booking.reserveButton();
 
     await hotelApp.booking.assertEmptyBookingFirstName();

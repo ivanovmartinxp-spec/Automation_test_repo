@@ -14,7 +14,7 @@ export class check_Availability_Component{
     constructor(page: Page){
         this.page = page;
 
-        this.availabilityForm = page.locator(".row g-3").filter({hasText: 'Check Availability & Book Your Stay'});
+        this.availabilityForm = page.locator(".card-body p-4").filter({hasText: 'Check Availability & Book Your Stay'});
         this.checkInInput = this.availabilityForm.locator('.react-datepicker__input-container').nth(0);
         this.checkOutInput = this.availabilityForm.locator('.react-datepicker__input-container').nth(1);
 
@@ -98,7 +98,7 @@ export class check_Availability_Component{
     }
 
 
-    async submitAvaliability(){
+    async submitAvailability(){
         await this.checkAvailabilityButton.click();
     }
 }
