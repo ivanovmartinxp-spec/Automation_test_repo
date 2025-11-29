@@ -41,7 +41,7 @@ export class booking_Form_Component{
 
         this.successMessage = this.bookingForm.getByText('Booking Successful!');
 
-        this.errorMessage = this.bookingForm.locator('.alert alert-danger');
+        this.errorMessage = this.bookingForm.getByRole('alert');
 
         
 
@@ -71,22 +71,30 @@ export class booking_Form_Component{
         phone: '07123456789',
     }){
         const{firstName, lastName, email, phone} = params;
+        await this.firstNameBooking.click();
         await this.firstNameBooking.fill(firstName);
+        await this.lastNameBooking.click();
         await this.lastNameBooking.fill(lastName);
+        await this.emailBooking.click();
         await this.emailBooking.fill(email);
+        await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
     }
 
     async emptyFirstNameDetails(params: {
-        firstName: ''
+        firstName: '',
         lastName: 'Smith',
         email: 'john.smith@test.com',
         phone: '07123456789',
     }){
         const{firstName, lastName, email, phone} = params;
+        await this.firstNameBooking.click();
         await this.firstNameBooking.fill(firstName);
+        await this.lastNameBooking.click();
         await this.lastNameBooking.fill(lastName);
+        await this.emailBooking.click();
         await this.emailBooking.fill(email);
+        await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
     }
 
@@ -97,9 +105,13 @@ export class booking_Form_Component{
         phone: '07123456789',
     }){
         const{firstName, lastName, email, phone} = params;
+        await this.firstNameBooking.click();
         await this.firstNameBooking.fill(firstName);
+        await this.lastNameBooking.click();
         await this.lastNameBooking.fill(lastName);
+        await this.emailBooking.click();
         await this.emailBooking.fill(email);
+        await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
     }
 
@@ -110,9 +122,13 @@ export class booking_Form_Component{
         phone: '07123456789',
     }){
         const{firstName, lastName, email, phone} = params;
+        await this.firstNameBooking.click();
         await this.firstNameBooking.fill(firstName);
+        await this.lastNameBooking.click();
         await this.lastNameBooking.fill(lastName);
+        await this.emailBooking.click();
         await this.emailBooking.fill(email);
+        await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
     }
 
@@ -124,9 +140,13 @@ export class booking_Form_Component{
         phone: '07123456789',
     }){
         const{firstName, lastName, email, phone} = params;
+        await this.firstNameBooking.click();
         await this.firstNameBooking.fill(firstName);
+        await this.lastNameBooking.click();
         await this.lastNameBooking.fill(lastName);
+        await this.emailBooking.click();
         await this.emailBooking.fill(email);
+        await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
     }
     
@@ -137,9 +157,13 @@ export class booking_Form_Component{
         phone: '07123456789',
     }){
         const{firstName, lastName, email, phone} = params;
+        await this.firstNameBooking.click();
         await this.firstNameBooking.fill(firstName);
+        await this.lastNameBooking.click();
         await this.lastNameBooking.fill(lastName);
+        await this.emailBooking.click();
         await this.emailBooking.fill(email);
+        await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
     }
 
@@ -150,9 +174,13 @@ export class booking_Form_Component{
         phone: '07123456789',
     }){
         const{firstName, lastName, email, phone} = params;
+        await this.firstNameBooking.click();
         await this.firstNameBooking.fill(firstName);
+        await this.lastNameBooking.click();
         await this.lastNameBooking.fill(lastName);
+        await this.emailBooking.click();
         await this.emailBooking.fill(email);
+        await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
     }
 
@@ -163,9 +191,13 @@ export class booking_Form_Component{
         phone: '',
     }){
         const{firstName, lastName, email, phone} = params;
+        await this.firstNameBooking.click();
         await this.firstNameBooking.fill(firstName);
+        await this.lastNameBooking.click();
         await this.lastNameBooking.fill(lastName);
+        await this.emailBooking.click();
         await this.emailBooking.fill(email);
+        await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
     }
 
@@ -176,9 +208,13 @@ export class booking_Form_Component{
         phone: '12345',
     }){
         const{firstName, lastName, email, phone} = params;
+        await this.firstNameBooking.click();
         await this.firstNameBooking.fill(firstName);
+        await this.lastNameBooking.click();
         await this.lastNameBooking.fill(lastName);
+        await this.emailBooking.click();
         await this.emailBooking.fill(email);
+        await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
     }
 
@@ -193,44 +229,59 @@ export class booking_Form_Component{
 
     }
 
+    async assertFormIsVisible(){
+        console.log(await this.bookingForm.allTextContents());
+        await expect(this.firstNameBooking).toBeVisible();
+        //await expect(this.firstNameBooking).toContainText('Firstname')
+    }
 
     async assertReservationSuccess(){
         await expect(this.successMessage).toBeVisible();
     }
     async assertEmptyBookingFirstName(){
+        console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Firstname should not be blank')
+        console.log(await this.errorMessage.allTextContents());
+        
+        await expect(this.errorMessage).toContainText('Firstname should not be blank')
     }
     async assertIncorrectFName(){
+        console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
         await expect(this.errorMessage).toHaveText('size must be between 3 and 18')
     }
     
     async assertEmptyLastNameError(){
+        console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
         await expect(this.errorMessage).toHaveText('Lastname should not be blank')
     }   
     async assertIncorrectLastNameError(){
+        console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
         await expect(this.errorMessage).toHaveText('size must be between 3 and 30')
     }
     async assertEmptyEmailError(){
+        console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
         await expect(this.errorMessage).toHaveText('must not be empty')
     }
 
     async assertIncorrectEmailError(){
+        console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
         await expect(this.errorMessage).toHaveText('must be a well-formed email address')
     }
     async assertEmptyPhoneError(){
+        console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
         await expect(this.errorMessage).toHaveText('must not be empty')
     }
     
     async assertIncorrectPhoneError(){
+        console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-         await expect(this.errorMessage).toHaveText('size must be between 11 and 21')
+        await expect(this.errorMessage).toHaveText('size must be between 11 and 21')
     }   
 
 }

@@ -8,9 +8,9 @@ export class rooms_Component{
     constructor(page: Page){
         this.page =page;
 
-        this.roomSection = page.locator('.row g-4')
+        this.roomSection = page.locator('#rooms')
 
-        this.roomCards = this.roomSection.locator('.col-md-6 col-lg-4');
+        this.roomCards = this.roomSection.locator('.room-card');
     }
 
     async waitForLoaded(){
@@ -19,7 +19,7 @@ export class rooms_Component{
     }
 
     //single room locator
-    private singleRoom(name: string): Locator{
+    private singleRoom(Single: string): Locator{
         return this.roomCards.filter({hasText: 'Single'})
     }
 
@@ -44,10 +44,11 @@ export class rooms_Component{
     async assertSingleRoomVisible(Single: string){
         await expect(this.singleRoom('Single')).toBeVisible();
     }
-
+    
+    
 
     //double room locator
-    private doubleRoom(name: string): Locator{
+    private doubleRoom(Double: string): Locator{
         return this.roomCards.filter({hasText: 'Double'})
     }
 
@@ -74,7 +75,7 @@ export class rooms_Component{
     }
 
      //suite room locator
-    private suiteRoom(name: string): Locator{
+    private suiteRoom(Suite: string): Locator{
         return this.roomCards.filter({hasText: 'Suite'})
     }
 
@@ -102,5 +103,9 @@ export class rooms_Component{
 
     async getRoomsCount(): Promise<number>{
         return await this.roomCards.count();
+    }
+
+    async getRoomNames():Promise<string[]>{
+        return await this.roomCards.allTextContents();
     }
 }
