@@ -4,6 +4,7 @@ export class booking_Form_Component{
     private readonly page: Page;
 
     private readonly bookingForm: Locator;
+    private readonly bookingConfirm: Locator;
     private readonly firstNameBooking: Locator;
     private readonly lastNameBooking: Locator;
     private readonly emailBooking: Locator;
@@ -15,15 +16,22 @@ export class booking_Form_Component{
     private readonly previousMonthBooking: Locator;
     private readonly reserveBooking: Locator;
     private readonly successMessage: Locator;
+    
+   
     private readonly errorMessage: Locator;
 
-    private readonly totalPrice: Locator;
+    private readonly roomPrice: Locator;
+    private readonly roomType: Locator;
+    private readonly roomDesc: Locator;
+    private readonly homePage: Locator;
+    private readonly returnHomePage: Locator;
 
 
     constructor(page:Page){
         this.page = page;
 
         this.bookingForm = page.locator('.card-body').filter({hasText: 'Book This Room'});
+        this.bookingConfirm = page.locator('.card-body').filter({hasText: 'Booking Confirmed'})
 
         this.firstNameBooking = this.bookingForm.getByRole('textbox', {name: 'Firstname'});
         this.lastNameBooking = this.bookingForm.getByRole('textbox', {name: 'Lastname'});
@@ -39,13 +47,17 @@ export class booking_Form_Component{
 
         this.reserveBooking = this.bookingForm.getByRole('button',{name:'Reserve Now'})
 
-        this.successMessage = this.bookingForm.getByText('Booking Successful!');
+        this.successMessage = this.bookingConfirm.getByText('Booking Confirmed');
+
+        this.returnHomePage = this.bookingConfirm.getByRole('link', {name: 'Return home'})
 
         this.errorMessage = this.bookingForm.getByRole('alert');
 
-        
 
-        this.totalPrice = this.bookingForm.locator('.d-flex justify-content-between fw-bold')
+        this.roomType = page.getByRole('heading', {name: "Single Room"});
+        this.roomPrice = page.getByText('Price Summary')
+        this.roomDesc = page.locator('.mb-4');
+        this.homePage = page.getByRole('link', {name: 'Home'});
     }
 
 
@@ -64,11 +76,33 @@ export class booking_Form_Component{
         await this.previousMonthBooking.click();
     }
 
+     async assertRoomTypeContains(roomType: string){
+            await expect(this.roomType).toContainText(roomType);
+        }
+
+        async assertPriceIsVisible(){
+            await expect(this.roomPrice).toBeVisible();
+        }
+
+         async returnToHomePage(){
+            await this.homePage.click();
+        }
+
+        private roomDescriptionFilter(Description:string): Locator{
+         return this.roomDesc.filter({hasText: 'Room Description'})
+        }
+
+        async roomDescription(Description:string){
+            const roomDesc = this.roomDescriptionFilter(Description);
+            await expect(roomDesc).toBeVisible();
+        }
+
+
     async correctBookingDetails( params: {
-        firstName: 'John',
-        lastName: 'Smith',
-        email: 'john.smith@test.com',
-        phone: '07123456789',
+        firstName: string,
+        lastName: string,
+        email: string,
+        phone: string,
     }){
         const{firstName, lastName, email, phone} = params;
         await this.firstNameBooking.click();
@@ -220,7 +254,7 @@ export class booking_Form_Component{
 
 
     async assertTotalPriceOnCorrectReservation(){
-        await expect(this.totalPrice).toHaveText('£740')
+        await expect(this.roomPrice).toHaveText('£740')
     }
 
 
@@ -238,6 +272,11 @@ export class booking_Form_Component{
     async assertReservationSuccess(){
         await expect(this.successMessage).toBeVisible();
     }
+
+    async assertReturnHomeIsVisible(){
+        await expect(this.returnHomePage).toBeVisible();
+    }
+
     async assertEmptyBookingFirstName(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
@@ -283,5 +322,7 @@ export class booking_Form_Component{
         await expect(this.errorMessage).toBeVisible();
         await expect(this.errorMessage).toHaveText('size must be between 11 and 21')
     }   
+
+
 
 }
