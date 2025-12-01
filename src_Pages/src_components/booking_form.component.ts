@@ -98,7 +98,7 @@ export class booking_Form_Component{
         }
 
 
-    async correctBookingDetails( params: {
+    async fillBookingDetails( params: {
         firstName: string,
         lastName: string,
         email: string,
@@ -115,7 +115,7 @@ export class booking_Form_Component{
         await this.phoneBooking.fill(phone);
     }
 
-    async emptyFirstNameDetails(params: {
+    /*async emptyFirstNameDetails(params: {
         firstName: '',
         lastName: 'Smith',
         email: 'john.smith@test.com',
@@ -250,7 +250,7 @@ export class booking_Form_Component{
         await this.emailBooking.fill(email);
         await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
-    }
+    }*/
 
 
     async assertTotalPriceOnCorrectReservation(){

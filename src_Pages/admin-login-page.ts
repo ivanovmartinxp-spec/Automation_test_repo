@@ -34,17 +34,24 @@ import { home_Page } from './home_page';
         await this.logInButton.click();
     }
 
-    async correctLogin(){
-        await this.login('admin', 'password');
+    async logindetails(params: {
+        username: string,
+        password: string,
+    }){
+        const{username, password} = params;
+        await this.usernameInput.click();
+        await this.usernameInput.fill(username);
+        await this.passwordInput.click();
+        await this.passwordInput.fill(password);
     }
 
-    async incorrectUsername(){
+    /*async incorrectUsername(){
         await this.login('1admin', 'password');
     }
 
     async incorrectPassword(){
         await this.login('admin', '1password');
-    }
+    }*/
 
     async assertInvalidLoginMsg(){
         await expect(this.logInError).toBeVisible();

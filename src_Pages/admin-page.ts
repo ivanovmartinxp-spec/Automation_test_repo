@@ -119,25 +119,53 @@ export class AdminRoomsPage extends AdminPage{
         await expect(this.roomsTableContainer).toBeVisible();
     }
 
-    async createNewRoom(){
-        
-        await this.roomIdInput.fill('144');
-        await this.roomTypeSelect.selectOption('Twin');
-        await this.roomAccessible.selectOption('true');
-        await this.roomPriceInput.fill('500');
-        await this.roomWiFi.click();
-        await this.roomTV.click();
-        await this.roomViews.click();
+    async createNewRoom(params:{
+        roomId: string,
+        roomType: string,
+        roomAccess: string,
+        roomPrice: string,
+        roomWiFi: boolean,
+        roomTV: boolean,
+        roomViews: boolean,
+        roomSafe: boolean,
+        roomRadio: boolean,
+        roomRefreshments: boolean,
+    })
+    {
+        const{roomId, roomType, roomAccess, roomPrice, roomWiFi, roomTV, roomViews, roomRadio, roomRefreshments, roomSafe} = params;
+        await this.roomIdInput.click();
+        await this.roomIdInput.fill(roomId);
+        await this.roomTypeSelect.click();
+        await this.roomTypeSelect.selectOption(roomType);
+        await this.roomAccessible.click();
+        await this.roomAccessible.selectOption(roomAccess);
+        await this.roomPriceInput.click()
+        await this.roomPriceInput.fill(roomPrice);
+        await this.roomWiFi.setChecked(roomWiFi);
+        await this.roomTV.setChecked(roomTV);
+        await this.roomViews.setChecked(roomViews);
+        await this.roomSafe.setChecked(roomSafe);
+        await this.roomRadio.setChecked(roomRadio);
+        await this.roomRefreshments.setChecked(roomRefreshments);
 
         await this.createRoomButton.click();
     }
 
-    private roomItemById(id: string): Locator{
+    /*private roomItemById(id: (string)): Locator{
         return this.createdRoomsList.filter({hasText: '144'});
+    }*/
+
+    private roomItemById(id: ({
+        roomId : string,
+    })): Locator{
+        const {roomId} = id
+        return this.createdRoomsList.filter({hasText: roomId});
     }
 
-    async assertRoomIsVisible (id:string){
-        await expect(this.roomItemById('144')).toBeVisible();
+    async assertRoomIsVisible (id:({
+        roomId : string
+    })){
+        await expect(this.roomItemById(id)).toBeVisible();
     }
 
     async getRoomsList():Promise<number>{
@@ -156,9 +184,13 @@ export class AdminRoomsPage extends AdminPage{
         await this.deleteCreatedRoom.click()
     }
 
-    async assertRoomIsRemoved (){
-        const deletedRoom = this.roomItemById('144')
-        await expect(deletedRoom).toHaveCount(0);
+    async assertRoomIsRemoved (params:{
+        deletedRoomId: string,
+    }){
+
+        const {deletedRoomId} = params
+        //await expect(deletedRoom).toHaveCount(0);
+        await expect(this.roomIdInput.getByText(deletedRoomId)).toHaveCount(0);
         //await expect(this.roomItemById('144')).toHaveCount(0);
     }
 

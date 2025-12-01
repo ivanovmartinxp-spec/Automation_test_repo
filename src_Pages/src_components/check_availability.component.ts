@@ -31,9 +31,9 @@ export class check_Availability_Component{
     }
     
 
-    async positiveAvailabilityCheck(params: {
-        startDate: "20/12/2025'",
-        endDate: "27/12/2025"
+    async checkRoomAvailability(params: {
+        startDate: string,
+        endDate: string,
     }){
         const{startDate, endDate} = params;
         await this.checkInInput.click();
@@ -44,7 +44,7 @@ export class check_Availability_Component{
 
     
 
-    async negativeAvailabilityCheck(params: {
+    /*async negativeAvailabilityCheck(params: {
         startDate: "27/12/2025'",
         endDate: "20/12/2025"
     }){
@@ -53,11 +53,11 @@ export class check_Availability_Component{
         await this.checkInInput.fill(startDate);
         await this.checkOutInput.click();
         await this.checkOutInput.fill(endDate);
-    }
+    }*/
 
-    async positiveCalendarAvCheck(params:{
-        startDate: '8',
-        endDate: '9',
+    async calendarAvailabilityCheck(params:{
+        startDate: string,
+        endDate: string,
     }){
         const{startDate, endDate} = params;
         await this.checkInInput.click();
@@ -66,7 +66,7 @@ export class check_Availability_Component{
         await this.datePicker.getByText(endDate, {exact: true}).click();
     }
 
-    async negativeCalendarAvCheck(params:{
+    /*async negativeCalendarAvCheck(params:{
         startDate: '14',    
         endDate: '7'
     }){
@@ -75,25 +75,31 @@ export class check_Availability_Component{
         await this.datePicker.getByText(startDate).click();
         await this.checkOutInput.click();
         await this.datePicker.getByText(endDate).click();
-    }
+    }*/
 
     async nextMonthCalendar(params:{
-        startDate: '7',
-        endDate: '14'
+        startDate: string,
+        endDate: string,
     }){
         const{startDate, endDate} = params;
+        await this.checkInInput.click();
         await this.datePickerNextMonth.click();
         await this.datePicker.getByText(startDate, {exact: true}).click();
+        await this.checkOutInput.click();
+        await this.datePickerNextMonth.click();
         await this.datePicker.getByText(endDate, {exact:true}).click();
     }
 
     async previousMonthCalendar(params:{
-        startDate: '7',
-        endDate: '14'
+        startDate: string,
+        endDate: string,
     }){
         const{startDate, endDate} = params;
+        await this.checkInInput.click();
         await this.datePickerPreviousMonth.click();
         await this.datePicker.getByText(startDate).click();
+        await this.checkOutInput.click();
+        await this.datePickerPreviousMonth.click();
         await this.datePicker.getByText(endDate).click();
     }
 
