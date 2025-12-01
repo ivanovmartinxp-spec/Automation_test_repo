@@ -1,7 +1,7 @@
 import {test} from '../fixtures/test_fixtures';
 
 
-test('User Can Book A Single Room Successfully', async ({hotelApp})=>{
+test('User Can Book A Single Room Successfully without entering dates', async ({hotelApp})=>{
     await hotelApp.rooms.waitForLoaded();
     await hotelApp.rooms.singleRoomBooking('Single');
     await hotelApp.booking.reserveButton();
@@ -23,8 +23,8 @@ test('User Can Book A Single Room Successfully', async ({hotelApp})=>{
 
 
 
-//page currently bugs on reservation submit when rooms are booked for those dates aleready
-test('User can book a room for a specific date', async ({hotelApp})=>{
+//page currently bugs on reservation submit when rooms are booked for those dates already
+test('User Can Book A Single Room Successfully', async ({hotelApp})=>{
     await hotelApp.rooms.waitForLoaded();
     await hotelApp.availability.calendarAvailabilityCheck({ 
         startDate: '8',
@@ -77,6 +77,10 @@ test('User can book a room for a specific date for future month', async ({hotelA
 
 test("User can book a Double Room Successfully", async ({hotelApp})=>{
     await hotelApp.rooms.waitForLoaded();
+    await hotelApp.availability.calendarAvailabilityCheck({ 
+        startDate: '10',
+        endDate: '11'});
+    await hotelApp.availability.submitAvailability();
     await hotelApp.rooms.singleRoomBooking('Double');
     await hotelApp.booking.reserveButton();
 
@@ -98,6 +102,10 @@ test("User can book a Double Room Successfully", async ({hotelApp})=>{
 
 test("User can book a Suite Room Successfully", async ({hotelApp})=>{
     await hotelApp.rooms.waitForLoaded();
+    await hotelApp.availability.calendarAvailabilityCheck({ 
+        startDate: '12',
+        endDate: '13'});
+    await hotelApp.availability.submitAvailability();
     await hotelApp.rooms.singleRoomBooking('Suite');
     await hotelApp.booking.reserveButton();
 
