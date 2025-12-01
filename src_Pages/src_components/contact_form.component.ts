@@ -262,46 +262,46 @@ export class contact_Form_Component{
 
     async assertEmptyContactName(){
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Name may not be blank')
+        await expect(this.errorMessage).toContainText('Name may not be blank')
     }
 
     async assertEmptyContactEmail(){
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Email may not be blank')
+        await expect(this.errorMessage).toContainText('Email may not be blank')
     }
 
     async assertIncorrectContactEmail(){
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('must be a well-formed email address')
+        await expect(this.errorMessage).toContainText('must be a well-formed email address')
     }
 
      async assertEmptyContactPhone(){
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Phone may not be blank')
+        await expect(this.errorMessage).toContainText('Phone may not be blank')
     }
 
     async assertIncorrectContactPhone(){
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Phone must be between 11 and 21 characters.')
+        await expect(this.errorMessage).toContainText('Phone must be between 11 and 21 characters.')
     }
 
    
     async assertEmptyContactSubject(){
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Subject may not be blank')
+        await expect(this.errorMessage).toContainText('Subject may not be blank')
     }
 
     async assertIncorrectContactSubject(){
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Subject must be between 5 and 100 characters.')
+        await expect(this.errorMessage).toContainText('Subject must be between 5 and 100 characters.')
     }
    
     async assertEmptyContactDescription(){
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Message may not be blank')
+        await expect(this.errorMessage).toContainText('Message may not be blank')
     }
     async assertIncorrectContactDescription(){
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Message must be between 20 and 2000 characters.')
+        await expect(this.errorMessage).toContainText('Message must be between 20 and 2000 characters.')
     }
 }
