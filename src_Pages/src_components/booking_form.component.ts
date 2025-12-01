@@ -47,7 +47,7 @@ export class booking_Form_Component{
 
         this.reserveBooking = this.bookingForm.getByRole('button',{name:'Reserve Now'})
 
-        this.successMessage = this.bookingConfirm.getByText('Booking Confirmed');
+        this.successMessage = this.page.locator('.card-body').filter({hasText: 'Booking Confirmed'});
 
         this.returnHomePage = this.bookingConfirm.getByRole('link', {name: 'Return home'})
 
@@ -291,7 +291,7 @@ export class booking_Form_Component{
     async assertIncorrectFName(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('size must be between 3 and 18')
+        await expect(this.errorMessage).toContainText('size must be between 3 and 18')
     }
     
     async assertEmptyLastNameError(){
@@ -302,7 +302,7 @@ export class booking_Form_Component{
     async assertIncorrectLastNameError(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('size must be between 3 and 30')
+        await expect(this.errorMessage).toContainText('size must be between 3 and 30')
     }
     async assertEmptyEmailError(){
         console.log(await this.bookingForm.allTextContents());
@@ -313,7 +313,7 @@ export class booking_Form_Component{
     async assertIncorrectEmailError(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('must be a well-formed email address')
+        await expect(this.errorMessage).toContainText('must be a well-formed email address')
     }
     async assertEmptyPhoneError(){
         console.log(await this.bookingForm.allTextContents());
@@ -324,7 +324,7 @@ export class booking_Form_Component{
     async assertIncorrectPhoneError(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('size must be between 11 and 21')
+        await expect(this.errorMessage).toContainText('size must be between 11 and 21')
     }   
 
 

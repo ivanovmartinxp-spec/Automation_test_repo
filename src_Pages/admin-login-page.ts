@@ -62,6 +62,6 @@ import { home_Page } from './home_page';
     }
 
     async returnToHomePageApp(){
-        await expect(this.returnToHomepage.click());
+        await this.returnToHomepage.click();
     }
  }
