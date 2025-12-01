@@ -1,6 +1,6 @@
 
 import {test} from '../fixtures/login_fixtures';
-
+//log in checks
 test('User Can log in Successfully', async ({adminPage, adminLoginPage})=>{
     await adminLoginPage.waitForVisible();
     await adminLoginPage.login({
