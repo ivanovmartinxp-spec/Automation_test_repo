@@ -128,7 +128,7 @@ await hotelApp.rooms.waitForLoaded();
 
 }) 
 
-
+// page goes into error state 
 test('User can not book a room for a specific date more than once', async ({hotelApp})=>{
     await hotelApp.rooms.waitForLoaded();
     //first booking
@@ -172,7 +172,7 @@ test('User can not book a room for a specific date more than once', async ({hote
     })
 
     await hotelApp.booking.reserveButton();
-    await hotelApp.booking.assertReservationSuccess();
+    await hotelApp.booking.assertErrorVisible();
     await hotelApp.booking.assertReturnHomeIsVisible();
 })
 
@@ -197,7 +197,7 @@ test('User can not book a room for a specific date for past month', async ({hote
     })
 
     await hotelApp.booking.reserveButton();
-    await hotelApp.booking.assertReservationSuccess();
+    await hotelApp.booking.assertErrorVisible();
     await hotelApp.booking.assertReturnHomeIsVisible();
 
 })

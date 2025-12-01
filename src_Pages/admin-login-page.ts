@@ -9,6 +9,7 @@ import { home_Page } from './home_page';
     private readonly passwordInput: Locator;
     private readonly logInButton: Locator;
     private readonly logInError: Locator;
+    private readonly returnToHomepage: Locator
 
     constructor (page: Page){
         super(page);
@@ -18,6 +19,7 @@ import { home_Page } from './home_page';
         this.passwordInput = page.getByRole('textbox', {name : 'Password'});
         this.logInButton = page.getByRole('button', {name : 'Login'});
         this.logInError = page.getByRole('alert').first();
+        this.returnToHomepage = page.getByRole('link', {name: 'Front Page'});
     }
 
     async open(){
@@ -28,13 +30,8 @@ import { home_Page } from './home_page';
         await this.loginFrom.waitFor({state: 'visible'});
     }
 
-    async login(username: string, password: string){
-        await this.usernameInput.fill(username);
-        await this.passwordInput.fill(password);
-        await this.logInButton.click();
-    }
 
-    async logindetails(params: {
+    async login(params: {
         username: string,
         password: string,
     }){
@@ -43,6 +40,7 @@ import { home_Page } from './home_page';
         await this.usernameInput.fill(username);
         await this.passwordInput.click();
         await this.passwordInput.fill(password);
+        await this.logInButton.click();
     }
 
     /*async incorrectUsername(){
@@ -61,5 +59,9 @@ import { home_Page } from './home_page';
     async assertLogInPageIsVisible(){
         await expect(this.loginFrom).toBeVisible();
 
+    }
+
+    async returnToHomePageApp(){
+        await expect(this.returnToHomepage.click());
     }
  }

@@ -1,6 +1,7 @@
 import {test as base} from '@playwright/test';
 import { AdminLoginPage } from '../../src_Pages/admin-login-page';
 import { AdminPage, AdminRoomsPage } from '../../src_Pages/admin-page';
+import {home_Page_Components} from '../../src_Pages/src_components/home_page.components';
 
 
 type AdminPages = {

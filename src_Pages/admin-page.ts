@@ -1,4 +1,4 @@
-import {Page, Locator, expect} from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { home_Page } from './home_page';
 
 export class AdminPage extends home_Page{
@@ -14,10 +14,12 @@ export class AdminPage extends home_Page{
     private readonly brandingTab: Locator;
     private readonly messagesTab: Locator;
     private readonly homePageTab: Locator;
+    private readonly homePageCheck: Locator
     private readonly logoutButton: Locator;
 
     constructor(page:Page){
         super(page);
+
 
         this.adminPage = page.locator('#root-container').filter({hasText: 'Restful Booker Platform Demo'});
         this.adminTitle = page.getByText('Restful Booker Platform Demo');
@@ -29,8 +31,14 @@ export class AdminPage extends home_Page{
 
         this.homePageTab = page.getByRole('link', {name: 'Front Page'});
         this.logoutButton = page.getByRole('button', {name: 'Logout'});
+        this.homePageCheck = page.getByRole('heading', {name: 'Welcome to Shady Meadows B&B'});
 
     }
+
+    async waitForVisible(){
+        await this.adminPage.waitFor({state: 'visible'});
+    }
+
 
     async assertPageVisible(){
         await expect(this.adminPage).toBeVisible();
@@ -59,6 +67,14 @@ export class AdminPage extends home_Page{
 
     async logout(){
         await this.logoutButton.click();
+    }
+
+    async waitForHomePageVisible(){
+        await this.homePageCheck.waitFor({state: 'visible'});
+    }
+
+    async assertHomePageVisible(){
+        await expect(this.homePageCheck).toBeVisible();
     }
 
 }
@@ -102,7 +118,7 @@ export class AdminRoomsPage extends AdminPage{
         this.roomSafe = page.getByRole('checkbox', {name : 'Safe'}).last();
         this.roomViews = page.getByRole('checkbox', {name : 'Views'}).last();
         this.createRoomButton = page.getByRole('button', {name : "Create"});
-        this.roomCreationError = page.getByRole('alert');
+        this.roomCreationError = page.locator('.alert');
 
         this.deleteCreatedRoom = page.locator('.roomDelete').last();
         this.roomsTableContainer = page.locator('.container');
@@ -173,10 +189,21 @@ export class AdminRoomsPage extends AdminPage{
     }
 
     async assertMissingRoomInformation(){
+        console.log (await this.roomCreationError.textContent());
         await expect(this.roomCreationError).toBeVisible();
     }
 
-    async missingRoomInformation(){
+    async assertMissingRoomNumber(){
+        await expect(this.roomCreationError).toBeVisible();
+        await expect(this.roomCreationError).toContainText('Room name must be set');
+    }
+
+    async assertMissingRoomPrice(){
+        await expect(this.roomCreationError).toBeVisible();
+        await expect(this.roomCreationError).toHaveText('must be greater than or equal to 1');
+    }
+
+    async missingRoomInformationSubmit(){
          await this.createRoomButton.click();
     }
 

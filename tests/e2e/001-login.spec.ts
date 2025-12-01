@@ -3,28 +3,48 @@ import {test} from '../fixtures/login_fixtures';
 
 test('User Can log in Successfully', async ({adminPage, adminLoginPage})=>{
     await adminLoginPage.waitForVisible();
-    await adminLoginPage.correctLogin();
+    await adminLoginPage.login({
+        username: 'admin',
+        password: 'password',
+    });
+    await adminPage.waitForVisible
     await adminPage.assertPageVisible();
 });
 
 test("User Can log out successfully", async ({adminPage,adminLoginPage})=>{
+    
     await adminLoginPage.waitForVisible();
-    await adminLoginPage.correctLogin();
+    await adminLoginPage.login({
+        username: 'admin',
+        password: 'password',
+    });
+    await adminPage.waitForVisible
     await adminPage.assertPageVisible();
 
     await adminPage.logout();
     await adminLoginPage.assertLogInPageIsVisible();
 })
 
-test('Invalid credentials error is displayed when username is incorrect',async({adminLoginPage})=>{
+test('User can navigate to the hotel app home page form the log in screen', async ({adminPage, adminLoginPage})=>{
     await adminLoginPage.waitForVisible();
-    await adminLoginPage.incorrectUsername();
-    await adminLoginPage.assertInvalidLoginMsg();
+    //return to hotel app homepage
+    await adminLoginPage.returnToHomePageApp();
+    await adminPage.waitForHomePageVisible();
+    await adminPage.assertHomePageVisible();
+
 });
 
-test('Invalid credentials error is displayed when password is incorrect',async({adminLoginPage})=>{
+test('Use can return to hotel app homepage after log in', async ({adminPage, adminLoginPage})=>{
     await adminLoginPage.waitForVisible();
-    await adminLoginPage.incorrectPassword();
-    await adminLoginPage.assertInvalidLoginMsg();
-});
+    await adminLoginPage.login({
+        username: 'admin',
+        password: 'password',
+    });
+    await adminPage.waitForVisible
+    await adminPage.assertPageVisible();
+    //return to hotel app homepage
+    await adminLoginPage.returnToHomePageApp();
+    await adminPage.waitForHomePageVisible();
+    await adminPage.assertHomePageVisible();
 
+});

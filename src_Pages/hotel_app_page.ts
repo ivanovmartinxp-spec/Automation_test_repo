@@ -18,7 +18,6 @@ export class hotel_app_Page extends home_Page{
     constructor(page: Page){
         super(page);
 
-
         this.rooms = new rooms_Component(page);
         this.booking = new booking_Form_Component(page);
         this.contact = new contact_Form_Component(page);

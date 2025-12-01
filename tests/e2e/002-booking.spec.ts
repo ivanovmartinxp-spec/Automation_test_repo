@@ -2,6 +2,7 @@ import {test} from '../fixtures/test_fixtures';
 
 
 test('User Can Book A Single Room Successfully', async ({hotelApp})=>{
+    await hotelApp.rooms.waitForLoaded();
     await hotelApp.rooms.singleRoomBooking('Single');
     await hotelApp.booking.reserveButton();
 
@@ -18,7 +19,7 @@ test('User Can Book A Single Room Successfully', async ({hotelApp})=>{
 
     await hotelApp.booking.assertReservationSuccess();
 
-})
+});
 
 
 
@@ -45,7 +46,7 @@ test('User can book a room for a specific date', async ({hotelApp})=>{
     await hotelApp.booking.assertReservationSuccess();
     await hotelApp.booking.assertReturnHomeIsVisible();
 
-})
+});
 
 
 test('User can book a room for a specific date for future month', async ({hotelApp})=>{
@@ -71,10 +72,11 @@ test('User can book a room for a specific date for future month', async ({hotelA
     await hotelApp.booking.assertReservationSuccess();
     await hotelApp.booking.assertReturnHomeIsVisible();
 
-})
+});
 
 
 test("User can book a Double Room Successfully", async ({hotelApp})=>{
+    await hotelApp.rooms.waitForLoaded();
     await hotelApp.rooms.singleRoomBooking('Double');
     await hotelApp.booking.reserveButton();
 
@@ -91,10 +93,11 @@ test("User can book a Double Room Successfully", async ({hotelApp})=>{
 
     await hotelApp.booking.assertReservationSuccess();
 
-})
+});
 
 
 test("User can book a Suite Room Successfully", async ({hotelApp})=>{
+    await hotelApp.rooms.waitForLoaded();
     await hotelApp.rooms.singleRoomBooking('Suite');
     await hotelApp.booking.reserveButton();
 
@@ -111,5 +114,5 @@ test("User can book a Suite Room Successfully", async ({hotelApp})=>{
 
     await hotelApp.booking.assertReservationSuccess();
 
-})
+});
 

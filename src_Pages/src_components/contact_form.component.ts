@@ -27,8 +27,8 @@ export class contact_Form_Component{
 
         this.contactSubmit = this.contactForm.getByRole('button', {name:'Submit'});
 
-        this.successMessage = this.contactForm.locator('.alert alert-success');
-        this.errorMessage = this.contactForm.locator('.alert alert-danger');
+        this.successMessage = page.locator('.col-lg-8').filter({hasText: 'Thanks for getting in touch'});
+        this.errorMessage = this.contactForm.locator('.alert');
 
 
     }
@@ -38,11 +38,11 @@ export class contact_Form_Component{
     }
     
     async submitContactForm(params:{
-        name: string;
-        email: string;
-        phone: string;
-        subject: string;
-        description: string;
+        name: string,
+        email: string,
+        phone: string,
+        subject: string,
+        description: string,
     }){
         const {name,email,phone,subject,description}=params;
         await this.nameInput.click();
@@ -251,8 +251,13 @@ export class contact_Form_Component{
         await this.contactSubmit.click();
     }*/
     
-    async assertMessageSubmitted(){
+    async assertMessageSubmitted(params:{
+        name: string;
+        subjectText: string
+    }){
+        const {name, subjectText} = params
         await expect(this.successMessage).toBeVisible();
+        await expect(this.successMessage).toContainText(`Thanks for getting in touch ${name}!We'll get back to you about${subjectText}as soon as possible.`)
     }
 
     async assertEmptyContactName(){

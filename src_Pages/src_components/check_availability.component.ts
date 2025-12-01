@@ -22,8 +22,8 @@ export class check_Availability_Component{
 
         this.datePicker = this.availabilityForm.locator('.react-datepicker');
 
-        this.datePickerNextMonth = this.datePicker.locator('.react-datepicker__navigation react-datepicker__navigation--next')
-        this.datePickerPreviousMonth = this.datePicker.locator('.react-datepicker__navigation react-datepicker__navigation--previous')
+        this.datePickerNextMonth = this.datePicker.getByRole('button', {name: 'Next Month'})
+        this.datePickerPreviousMonth = this.datePicker.getByRole('button', {name: 'Previous Month'})
     }
 
     async waitForVisible(){
