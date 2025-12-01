@@ -270,6 +270,7 @@ export class booking_Form_Component{
     }
 
     async assertReservationSuccess(){
+        await this.successMessage.waitFor({state: 'visible'});
         await expect(this.successMessage).toBeVisible();
     }
 
