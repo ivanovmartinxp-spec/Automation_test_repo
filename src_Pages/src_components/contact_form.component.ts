@@ -27,8 +27,8 @@ export class contact_Form_Component{
 
         this.contactSubmit = this.contactForm.getByRole('button', {name:'Submit'});
 
-        this.successMessage = this.contactForm.locator('.alert alert-success');
-        this.errorMessage = this.contactForm.locator('.alert alert-danger');
+        this.successMessage = page.locator('.col-lg-8').filter({hasText: 'Thanks for getting in touch'});
+        this.errorMessage = this.contactForm.locator('.alert');
 
 
     }
@@ -38,27 +38,27 @@ export class contact_Form_Component{
     }
     
     async submitContactForm(params:{
-        name: string;
-        email: string;
-        phone: string;
-        subject: string;
-        description: string;
+        name: string,
+        email: string,
+        phone: string,
+        subject: string,
+        description: string,
     }){
         const {name,email,phone,subject,description}=params;
         await this.nameInput.click();
-        await this.nameInput.fill('John');
+        await this.nameInput.fill(name);
         await this.emailInput.click();
-        await this.emailInput.fill('john@test.com')
+        await this.emailInput.fill(email)
         await this.phoneInput.click();
-        await this.phoneInput.fill("07123456789");
+        await this.phoneInput.fill(phone);
         await this.subjectInput.click();
-        await this.subjectInput.fill('Example Subject');
+        await this.subjectInput.fill(subject);
         await this.messageInput.click();
-        await this.messageInput.fill('This is an example message for testing purposes only!!');
+        await this.messageInput.fill(description);
         await this.contactSubmit.click();
     }
 
-    async emptyContactFormName(params:{
+    /*async emptyContactFormName(params:{
         name: string;
         email: string;
         phone: string;
@@ -249,10 +249,15 @@ export class contact_Form_Component{
         await this.messageInput.click();
         await this.messageInput.fill('test');
         await this.contactSubmit.click();
-    }
+    }*/
     
-    async assertMessageSubmitted(){
+    async assertMessageSubmitted(params:{
+        name: string;
+        subjectText: string
+    }){
+        const {name, subjectText} = params
         await expect(this.successMessage).toBeVisible();
+        await expect(this.successMessage).toContainText(`Thanks for getting in touch ${name}!We'll get back to you about${subjectText}as soon as possible.`)
     }
 
     async assertEmptyContactName(){

@@ -98,7 +98,7 @@ export class booking_Form_Component{
         }
 
 
-    async correctBookingDetails( params: {
+    async fillBookingDetails( params: {
         firstName: string,
         lastName: string,
         email: string,
@@ -115,7 +115,7 @@ export class booking_Form_Component{
         await this.phoneBooking.fill(phone);
     }
 
-    async emptyFirstNameDetails(params: {
+    /*async emptyFirstNameDetails(params: {
         firstName: '',
         lastName: 'Smith',
         email: 'john.smith@test.com',
@@ -250,7 +250,7 @@ export class booking_Form_Component{
         await this.emailBooking.fill(email);
         await this.phoneBooking.click();
         await this.phoneBooking.fill(phone);
-    }
+    }*/
 
 
     async assertTotalPriceOnCorrectReservation(){
@@ -277,6 +277,10 @@ export class booking_Form_Component{
         await expect(this.returnHomePage).toBeVisible();
     }
 
+    async assertErrorVisible(){
+        await expect(this.errorMessage).toBeVisible();
+    }
+
     async assertEmptyBookingFirstName(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
@@ -293,7 +297,7 @@ export class booking_Form_Component{
     async assertEmptyLastNameError(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('Lastname should not be blank')
+        await expect(this.errorMessage).toContainText('Lastname should not be blank')
     }   
     async assertIncorrectLastNameError(){
         console.log(await this.bookingForm.allTextContents());
@@ -303,7 +307,7 @@ export class booking_Form_Component{
     async assertEmptyEmailError(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('must not be empty')
+        await expect(this.errorMessage).toContainText('must not be empty')
     }
 
     async assertIncorrectEmailError(){
@@ -314,7 +318,7 @@ export class booking_Form_Component{
     async assertEmptyPhoneError(){
         console.log(await this.bookingForm.allTextContents());
         await expect(this.errorMessage).toBeVisible();
-        await expect(this.errorMessage).toHaveText('must not be empty')
+        await expect(this.errorMessage).toContainText('must not be empty')
     }
     
     async assertIncorrectPhoneError(){

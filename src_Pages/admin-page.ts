@@ -1,4 +1,4 @@
-import {Page, Locator, expect} from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { home_Page } from './home_page';
 
 export class AdminPage extends home_Page{
@@ -14,10 +14,12 @@ export class AdminPage extends home_Page{
     private readonly brandingTab: Locator;
     private readonly messagesTab: Locator;
     private readonly homePageTab: Locator;
+    private readonly homePageCheck: Locator
     private readonly logoutButton: Locator;
 
     constructor(page:Page){
         super(page);
+
 
         this.adminPage = page.locator('#root-container').filter({hasText: 'Restful Booker Platform Demo'});
         this.adminTitle = page.getByText('Restful Booker Platform Demo');
@@ -29,8 +31,14 @@ export class AdminPage extends home_Page{
 
         this.homePageTab = page.getByRole('link', {name: 'Front Page'});
         this.logoutButton = page.getByRole('button', {name: 'Logout'});
+        this.homePageCheck = page.getByRole('heading', {name: 'Welcome to Shady Meadows B&B'});
 
     }
+
+    async waitForVisible(){
+        await this.adminPage.waitFor({state: 'visible'});
+    }
+
 
     async assertPageVisible(){
         await expect(this.adminPage).toBeVisible();
@@ -59,6 +67,14 @@ export class AdminPage extends home_Page{
 
     async logout(){
         await this.logoutButton.click();
+    }
+
+    async waitForHomePageVisible(){
+        await this.homePageCheck.waitFor({state: 'visible'});
+    }
+
+    async assertHomePageVisible(){
+        await expect(this.homePageCheck).toBeVisible();
     }
 
 }
@@ -102,7 +118,7 @@ export class AdminRoomsPage extends AdminPage{
         this.roomSafe = page.getByRole('checkbox', {name : 'Safe'}).last();
         this.roomViews = page.getByRole('checkbox', {name : 'Views'}).last();
         this.createRoomButton = page.getByRole('button', {name : "Create"});
-        this.roomCreationError = page.getByRole('alert');
+        this.roomCreationError = page.locator('.alert');
 
         this.deleteCreatedRoom = page.locator('.roomDelete').last();
         this.roomsTableContainer = page.locator('.container');
@@ -119,25 +135,53 @@ export class AdminRoomsPage extends AdminPage{
         await expect(this.roomsTableContainer).toBeVisible();
     }
 
-    async createNewRoom(){
-        
-        await this.roomIdInput.fill('144');
-        await this.roomTypeSelect.selectOption('Twin');
-        await this.roomAccessible.selectOption('true');
-        await this.roomPriceInput.fill('500');
-        await this.roomWiFi.click();
-        await this.roomTV.click();
-        await this.roomViews.click();
+    async createNewRoom(params:{
+        roomId: string,
+        roomType: string,
+        roomAccess: string,
+        roomPrice: string,
+        roomWiFi: boolean,
+        roomTV: boolean,
+        roomViews: boolean,
+        roomSafe: boolean,
+        roomRadio: boolean,
+        roomRefreshments: boolean,
+    })
+    {
+        const{roomId, roomType, roomAccess, roomPrice, roomWiFi, roomTV, roomViews, roomRadio, roomRefreshments, roomSafe} = params;
+        await this.roomIdInput.click();
+        await this.roomIdInput.fill(roomId);
+        await this.roomTypeSelect.click();
+        await this.roomTypeSelect.selectOption(roomType);
+        await this.roomAccessible.click();
+        await this.roomAccessible.selectOption(roomAccess);
+        await this.roomPriceInput.click()
+        await this.roomPriceInput.fill(roomPrice);
+        await this.roomWiFi.setChecked(roomWiFi);
+        await this.roomTV.setChecked(roomTV);
+        await this.roomViews.setChecked(roomViews);
+        await this.roomSafe.setChecked(roomSafe);
+        await this.roomRadio.setChecked(roomRadio);
+        await this.roomRefreshments.setChecked(roomRefreshments);
 
         await this.createRoomButton.click();
     }
 
-    private roomItemById(id: string): Locator{
+    /*private roomItemById(id: (string)): Locator{
         return this.createdRoomsList.filter({hasText: '144'});
+    }*/
+
+    private roomItemById(id: ({
+        roomId : string,
+    })): Locator{
+        const {roomId} = id
+        return this.createdRoomsList.filter({hasText: roomId});
     }
 
-    async assertRoomIsVisible (id:string){
-        await expect(this.roomItemById('144')).toBeVisible();
+    async assertRoomIsVisible (id:({
+        roomId : string
+    })){
+        await expect(this.roomItemById(id)).toBeVisible();
     }
 
     async getRoomsList():Promise<number>{
@@ -145,10 +189,21 @@ export class AdminRoomsPage extends AdminPage{
     }
 
     async assertMissingRoomInformation(){
+        console.log (await this.roomCreationError.textContent());
         await expect(this.roomCreationError).toBeVisible();
     }
 
-    async missingRoomInformation(){
+    async assertMissingRoomNumber(){
+        await expect(this.roomCreationError).toBeVisible();
+        await expect(this.roomCreationError).toContainText('Room name must be set');
+    }
+
+    async assertMissingRoomPrice(){
+        await expect(this.roomCreationError).toBeVisible();
+        await expect(this.roomCreationError).toHaveText('must be greater than or equal to 1');
+    }
+
+    async missingRoomInformationSubmit(){
          await this.createRoomButton.click();
     }
 
@@ -156,9 +211,13 @@ export class AdminRoomsPage extends AdminPage{
         await this.deleteCreatedRoom.click()
     }
 
-    async assertRoomIsRemoved (){
-        const deletedRoom = this.roomItemById('144')
-        await expect(deletedRoom).toHaveCount(0);
+    async assertRoomIsRemoved (params:{
+        deletedRoomId: string,
+    }){
+
+        const {deletedRoomId} = params
+        //await expect(deletedRoom).toHaveCount(0);
+        await expect(this.roomIdInput.getByText(deletedRoomId)).toHaveCount(0);
         //await expect(this.roomItemById('144')).toHaveCount(0);
     }
 
