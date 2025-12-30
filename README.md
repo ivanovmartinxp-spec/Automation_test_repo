@@ -4,7 +4,7 @@
 
 A comprehensive automation suite built with Playwright and TypeScript to ensure application quality.
 
-[![Build Status](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/playwright.yml/badge.svg)](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/playwright.yml)
+<!--[![Build Status](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/playwright.yml/badge.svg)](https://github.com/YOUR_USERNAME/YOUR_REPO/actions/workflows/playwright.yml)-->
 [![Playwright](https://img.shields.io/badge/powered%20by-Playwright-2EAD33?logo=playwright)](https://playwright.dev/)
 ![TypeScript](https://img.shields.io/badge/written%20in-TypeScript-3178C6?logo=typescript)
 
